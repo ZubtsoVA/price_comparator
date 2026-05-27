@@ -1,0 +1,21 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  collation: utf8mb4_unicode_ci
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: root
+  password: 
+  host: localhost
+  port: 3306
+
+development:
+  <<: *default
+  database: price_comparator_development
+
+test:
+  <<: *default
+  database: price_comparator_test
+
+production:
+  <<: *default
+  database: price_comparator_production
