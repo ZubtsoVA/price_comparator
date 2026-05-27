@@ -1,0 +1,8 @@
+# Аналог lifespan в FastAPI — создаём один инстанс сервиса при старте
+# и закрываем браузеры при остановке
+Rails.application.config.search_service = SearchService.new
+
+# Graceful shutdown — закрываем браузеры при остановке сервера
+at_exit do
+  Rails.application.config.search_service.close
+end
