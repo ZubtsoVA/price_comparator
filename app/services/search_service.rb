@@ -20,11 +20,8 @@ class SearchService
 
     Rails.logger.info "Parsing '#{query}' page #{page_num}..."
 
-    wb_future   = Concurrent::Future.execute { @wb_parser.search(query, page_num) }
-    ozon_future = Concurrent::Future.execute { @ozon_parser.search(query, page_num) }
-
-    wb_results   = wb_future.value || []
-    ozon_results = ozon_future.value || []
+    wb_results   = @wb_parser.search(query, page_num)
+    ozon_results = @ozon_parser.search(query, page_num)
 
     results = wb_results + ozon_results
 
@@ -50,6 +47,7 @@ class SearchService
 
   def persist_results(results)
     results.each do |item|
+      item = raw.transform_keys(&:to_s)
       platform = Platform.find_by!(slug: item["source"])
 
       product = Product.find_or_create_by(link: item["link"], platform: platform) do |p|

@@ -1,4 +1,5 @@
 class SearchCache < ApplicationRecord
+  serialize :results, coder: JSON
   validates :cache_key, presence: true, uniqueness: true
 
   scope :alive, -> { where("expires_at > ?", Time.current) }
