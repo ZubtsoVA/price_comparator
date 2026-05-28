@@ -1,7 +1,7 @@
 module Parsers
   class WildberriesParser < BaseParser
     SEARCH_URL     = "https://www.wildberries.ru/catalog/0/search.aspx?search=%s&page=%d"
-    CARD_SELECTOR  = "article.product-card"
+    CARD_SELECTOR = 'article[class*="product"]'
 
     def search(query, page_num = 1)
       url  = SEARCH_URL % [CGI.escape(query), page_num]
@@ -16,7 +16,7 @@ module Parsers
         (() => {
           const results = [];
           const seenLinks = new Set();
-          const cards = document.querySelectorAll('article.product-card');
+          const cards = document.querySelectorAll('article[class*="product"]');
 
           cards.forEach(card => {
             const linkEl = card.querySelector('a');

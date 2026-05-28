@@ -5,8 +5,7 @@ Rails.application.routes.draw do
   root "pages#index"
 
   # Поиск
-  get "/search", to: "searches#show"
-
+  get  "/search", to: "searches#show"
   post "/cache/clear", to: "searches#clear_cache"
 
   # История цен

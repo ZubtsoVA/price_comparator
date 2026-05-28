@@ -1,14 +1,7 @@
 class ProductsController < ApplicationController
   def price_history
-    product = Product.find(params[:id])
 
-    history = product.prices.history.map do |price|
-      {
-        amount: price.amount,
-        platform: price.platform.name,
-        recorded_at: price.recorded_at.iso8601
-      }
-    end
+    product = Product.includes(prices: :platform).find(params[:id])
 
     render json: {
       product: {

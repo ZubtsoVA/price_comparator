@@ -13,7 +13,9 @@ module Parsers
         browser_options: {
           "no-sandbox": nil,
           "disable-dev-shm-usage": nil,
-          "disable-gpu": nil
+          "disable-gpu": nil,
+          "window-size": "1920,1080",
+          "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
         }
       )
     end
@@ -26,6 +28,11 @@ module Parsers
 
     def open_page(url, wait_selector:)
       page = @browser.create_page
+
+      # Патчим webdriver ДО навигации через CDP команду страницы
+      page.command("Page.addScriptToEvaluateOnNewDocument",
+                   source: "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+
       page.go_to(url)
       page.network.wait_for_idle(timeout: PAGE_TIMEOUT_MS / 1000)
 

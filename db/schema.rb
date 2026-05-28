@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 5) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_28_083029) do
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
@@ -56,13 +56,13 @@ ActiveRecord::Schema[8.1].define(version: 5) do
   end
 
   create_table "search_caches", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "cache_key", null: false
     t.datetime "created_at", null: false
     t.datetime "expires_at", null: false
+    t.string "query_key", null: false
     t.json "results", null: false
     t.datetime "updated_at", null: false
-    t.index ["cache_key"], name: "index_search_caches_on_cache_key", unique: true
     t.index ["expires_at"], name: "index_search_caches_on_expires_at"
+    t.index ["query_key"], name: "index_search_caches_on_query_key", unique: true
   end
 
   add_foreign_key "prices", "platforms"
