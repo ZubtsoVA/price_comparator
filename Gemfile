@@ -14,6 +14,7 @@ gem "puma", ">= 5.0"
 # Ferrum — Ruby-драйвер Chrome DevTools Protocol (CDP)
 gem "ferrum"
 
+gem "playwright-ruby-client"
 # Concurrent::Future — обёртка над пулом потоков
 gem "concurrent-ruby"
 
